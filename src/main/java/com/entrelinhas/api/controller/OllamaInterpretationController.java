@@ -1,6 +1,6 @@
 package com.entrelinhas.api.controller;
 
-import com.entrelinhas.api.Dto.InterpretationResponseDTO;
+import com.entrelinhas.api.Dto.InterpretationDTO;
 import com.entrelinhas.api.service.OllamaInterpretationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,12 +16,15 @@ public class OllamaInterpretationController {
     private final OllamaInterpretationService service;
 
     @PostMapping
-    public InterpretationResponseDTO interpretar(
-            @RequestBody String request
-    ) {
+    public String interpretar(@RequestBody String texto) {
 
-        return service.interpretar(
-                request
-        );
+        System.out.println("Controller iniciado");
+
+        String resposta = service.interpretar(texto);
+
+        System.out.println("Controller finalizado");
+
+        return resposta;
     }
+
 }

@@ -14,30 +14,13 @@ public class OllamaCorrectionController {
 
     private final OllamaCorrectionService service;
 
-    //private final OllamaService ollamaService;
+    @PostMapping
+    public String corrigir(
+            @RequestBody String texto
+    ){
 
-    /*public String corrigir(String texto) {
+        return service.corrigir(texto);
 
-        String prompt = """
-                Você recebeu um texto extraído por OCR.
+    }
 
-                Sua tarefa é corrigir apenas erros causados pelo OCR.
-
-                Regras:
-                - Não resuma.
-                - Não interprete.
-                - Não adicione informações.
-                - Não remova conteúdo.
-                - Preserve a estrutura do texto.
-                - Corrija apenas palavras reconhecidas incorretamente.
-
-                Retorne apenas o texto corrigido.
-
-                Texto:
-                %s
-                """
-                .formatted(texto);
-
-        return ollamaService.generate(prompt);
-    }*/
 }
