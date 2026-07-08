@@ -25,22 +25,20 @@ ollama serve
 
 ## Configuração
 
-Crie um arquivo `.env` na raiz do projeto utilizando o `.env.example` como base.
+A aplicação possui valores padrão para todas as configurações necessárias, permitindo sua execução sem alterações adicionais em um ambiente padrão.
 
-Exemplo:
+Caso seja necessário personalizar alguma configuração, utilize as seguintes variáveis de ambiente:
 
-```env
-UPLOAD_DIR=uploads
-PROCESSED_DIR=processed
-
-OLLAMA_URL=http://localhost:11434
-OLLAMA_MODEL=llama3
-
-TESSERACT_DATA_PATH=C:\Program Files\Tesseract\tessdata
-TESSERACT_LANGUAGE=por
-TESSERACT_PAGE_SEG_MODE=3
-TESSERACT_OCR_ENGINE_MODE=3
-```
+| Variável                    | Valor padrão                          |
+| --------------------------- | ------------------------------------- |
+| `UPLOAD_DIR`                | `uploads`                             |
+| `PROCESSED_DIR`             | `processed`                           |
+| `OLLAMA_URL`                | `http://localhost:11434`              |
+| `OLLAMA_MODEL`              | `llama3`                              |
+| `TESSERACT_DATA_PATH`       | `C:\Program Files\Tesseract\tessdata` |
+| `TESSERACT_LANGUAGE`        | `por`                                 |
+| `TESSERACT_PAGE_SEG_MODE`   | `3`                                   |
+| `TESSERACT_OCR_ENGINE_MODE` | `3`                                   |
 
 ## Executando o projeto
 
@@ -73,4 +71,5 @@ http://localhost:8002
 
 * O Ollama deve estar em execução e com o modelo `llama3` instalado.
 * O Tesseract deve possuir o idioma português (`por`) instalado.
-* Caso utilize outro sistema operacional, ajuste a variável `TESSERACT_DATA_PATH` no arquivo `.env`.
+* Caso o Tesseract esteja instalado em um diretório diferente do padrão, defina a variável de ambiente `TESSERACT_DATA_PATH` com o caminho correspondente.
+
