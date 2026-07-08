@@ -25,6 +25,7 @@ public class ImageService {
     private String processedDir;
 
     public String processarParaOCR(String caminhoImagem) throws IOException {
+
         Mat image = imread(caminhoImagem);
 
         if (image.empty()) {
@@ -32,33 +33,8 @@ public class ImageService {
         }
 
         Mat gray = new Mat();
-        Mat claheImage = new Mat();
-        Mat resized = new Mat();
 
-        // Escala de cinza
-        cvtColor(
-                image,
-                gray,
-                COLOR_BGR2GRAY
-        );
-
-        // CLAHE
-        CLAHE clahe = createCLAHE();
-        clahe.setClipLimit(2.0);
-        clahe.apply(
-                gray,
-                claheImage
-        );
-
-        // Resize
-        resize(
-                claheImage,
-                resized,
-                new Size(),
-                2.0,
-                2.0,
-                INTER_CUBIC
-        );
+        cvtColor(image, gray, COLOR_BGR2GRAY);
 
         Path processedPath = Paths.get(processedDir);
 
@@ -66,35 +42,18 @@ public class ImageService {
             Files.createDirectories(processedPath);
         }
 
-        String nomeArquivo =
-                Paths.get(caminhoImagem)
-                        .getFileName()
-                        .toString()
-                        .replace(".png", "");
+        String nomeArquivo = Paths.get(caminhoImagem)
+                .getFileName()
+                .toString()
+                .replace(".png", "");
 
-        String grayPath =
-                processedPath.resolve(
-                        nomeArquivo + "_gray.png"
-                ).toString();
+        String grayPath = processedPath
+                .resolve(nomeArquivo + "_gray.png")
+                .toString();
 
-        String clahePath =
-                processedPath.resolve(
-                        nomeArquivo + "_clahe.png"
-                ).toString();
-
-        String finalPath =
-                processedPath.resolve(
-                        nomeArquivo + "_final.png"
-                ).toString();
-
-        // Salva cada etapa
         imwrite(grayPath, gray);
 
-        imwrite(clahePath, claheImage);
-
-        imwrite(finalPath, resized);
-
-        return finalPath;
+        return grayPath;
     }
 }
 

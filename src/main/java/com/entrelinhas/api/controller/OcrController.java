@@ -16,9 +16,9 @@ public class OcrController {
     private OcrService ocrService;
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImagem(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadImagem(@RequestParam("file") String caminhoImagem) {
         try {
-            String texto = ocrService.extrairTexto(file);
+            String texto = ocrService.extrairTexto(caminhoImagem);
             return ResponseEntity.ok(texto);
         } catch (Exception e) {
             return ResponseEntity.status(500).body("Erro: " + e.getMessage());

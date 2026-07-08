@@ -9,46 +9,42 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 @Service
 public class OcrService {
     @Autowired
     private ITesseract tesseract;
 
-    public String extrairTexto(MultipartFile arquivo) throws Exception {
-        File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + arquivo.getOriginalFilename());
-        arquivo.transferTo(convFile);
-
+    public String extrairTexto(String caminhoImagem) throws Exception {
         try {
-            BufferedImage img = ImageIO.read(convFile);
+
+            BufferedImage img = ImageIO.read(new File(caminhoImagem));
 
             int largura = img.getWidth();
             int altura = img.getHeight();
 
-            BufferedImage topo =
-                    img.getSubimage(
-                            0,
-                            0,
-                            largura,
-                            altura / 2
-                    );
+            BufferedImage topo = img.getSubimage(
+                    0,
+                    0,
+                    largura,
+                    altura / 2
+            );
 
-            BufferedImage baixo =
-                    img.getSubimage(
-                            0,
-                            altura / 2,
-                            largura,
-                            altura / 2
-                    );
+            BufferedImage baixo = img.getSubimage(
+                    0,
+                    altura / 2,
+                    largura,
+                    altura / 2
+            );
 
-            System.out.println("Largura: " + img.getWidth());
-            System.out.println("Altura: " + img.getHeight());
             String textoTopo = tesseract.doOCR(topo);
             String textoBaixo = tesseract.doOCR(baixo);
 
             return textoTopo + "\n" + textoBaixo;
-        } catch (TesseractException e) {
-            throw new RuntimeException("Erro ao ler a imagem", e);
+
+        } catch (IOException | TesseractException e) {
+            throw new RuntimeException("Erro ao executar OCR.", e);
         }
     }
 }
