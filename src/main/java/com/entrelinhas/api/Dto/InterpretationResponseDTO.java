@@ -21,4 +21,6 @@ public class InterpretationResponseDTO {
 
     private List<String> ideiasPrincipais;
 
+    private String texto;
+
 }

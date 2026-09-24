@@ -46,7 +46,11 @@ public class AnalysisService {
                 textCleaningService.limparTexto(texto);
 
         // IA
-        return interpretationService.interpretar(texto);
+        InterpretationResponseDTO dto = interpretationService.interpretar(texto);
+        if (dto != null) {
+            dto.setTexto(texto);
+        }
+        return dto;
     }
 
 }
