@@ -1,4 +1,4 @@
-package com.entrelinhas.api.Dto;
+package com.entrelinhas.api.dto;
 
 import lombok.Data;
 

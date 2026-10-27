@@ -1,7 +1,7 @@
 package com.entrelinhas.api.service;
 
-import com.entrelinhas.api.Dto.OllamaRequest;
-import com.entrelinhas.api.Dto.OllamaResponse;
+import com.entrelinhas.api.dto.OllamaRequest;
+import com.entrelinhas.api.dto.OllamaResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;

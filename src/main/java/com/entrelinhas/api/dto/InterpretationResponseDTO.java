@@ -1,4 +1,4 @@
-package com.entrelinhas.api.Dto;
+package com.entrelinhas.api.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,5 +20,7 @@ public class InterpretationResponseDTO {
     private String intencaoAutor;
 
     private List<String> ideiasPrincipais;
+
+    private String textoOriginal;
 
 }
