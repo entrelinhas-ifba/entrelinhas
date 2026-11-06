@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import tools.jackson.databind.ObjectMapper;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -204,4 +206,29 @@ public class HistoryService {
         );
     }
 
+    @Transactional(readOnly = true)
+    public HistoryStatsResponseDTO obterEstatisticas(String email) {
+        User user = buscarUsuario(email);
+
+        LocalDateTime inicioDoMes = LocalDateTime.now().withDayOfMonth(1).toLocalDate().atStartOfDay();
+        long paginasEsteMes = historyRepository.countByUserIdAndCriadoEmGreaterThanEqual(
+                user.getId(),
+                inicioDoMes
+        );
+
+        List<History> historicos = historyRepository.findByUserId(user.getId());
+        long totalPalavras = historicos.stream()
+                .filter(h -> h.getTextoOriginal() != null && !h.getTextoOriginal().isBlank())
+                .mapToLong(h -> contarPalavras(h.getTextoOriginal()))
+                .sum();
+
+        return new HistoryStatsResponseDTO(paginasEsteMes, totalPalavras);
+    }
+
+    private long contarPalavras(String texto) {
+        if (texto == null || texto.isBlank()) {
+            return 0;
+        }
+        return texto.trim().split("\\s+").length;
+    }
 }

@@ -3,6 +3,7 @@ package com.entrelinhas.api.controller;
 
 import com.entrelinhas.api.dto.HistoryRequestDTO;
 import com.entrelinhas.api.dto.HistoryResponseDTO;
+import com.entrelinhas.api.dto.HistoryStatsResponseDTO;
 import com.entrelinhas.api.dto.HistoryUpdateDTO;
 import com.entrelinhas.api.entity.History;
 import com.entrelinhas.api.service.HistoryService;
@@ -88,5 +89,14 @@ public class HistoryController {
         historyService.excluir(authentication.getName(), id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/estatisticas")
+    public ResponseEntity<HistoryStatsResponseDTO> obterEstatisticas(
+            Authentication authentication
+    ) {
+        return ResponseEntity.ok(
+                historyService.obterEstatisticas(authentication.getName())
+        );
     }
 }
